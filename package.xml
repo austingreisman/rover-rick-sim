@@ -2,13 +2,23 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rover_rick_sim</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="austingreisman@todo.todo">austingreisman</maintainer>
+  <version>1.0.0</version>
+  <description>A ROS2 Humble Gazebo Simulation of Rover Rick</description>
+  <maintainer email="austin.mfg@gmail.com">Austin Greisman</maintainer>
   <license>TODO: License declaration</license>
-
+  
+  <!-- Building -->
   <buildtool_depend>ament_cmake</buildtool_depend>
-
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>yaml</exec_depend>
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>test_depend</exec_depend>
+  
+  <!-- Testing -->
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
