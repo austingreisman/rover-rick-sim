@@ -27,10 +27,10 @@ find_package(joy REQUIRED)
 #   DESTINATION lib/${PROJECT_NAME}
 # )
 
-# install(
-#   DIRECTORY src launch rviz config world meshes
-#   DESTINATION share/${PROJECT_NAME}
-# )
+install(
+  DIRECTORY src launch rviz config world meshes
+  DESTINATION share/${PROJECT_NAME}
+)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

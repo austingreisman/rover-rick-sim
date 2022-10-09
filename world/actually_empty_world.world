@@ -55,13 +55,13 @@
         <visual name='visual'>
           <origin xyz="0 0 0" rpy="0 0 0"/>
           <geometry>
-            <mesh><uri>file:///home/austin/Documents/2ws/src/sim_bot_description/meshes/worlds/agriculture_world.dae</uri></mesh>
+            <mesh><uri>file:///home/austingreisman/Documents/ws/src/rover_rick_sim/world/agriculture_data/agriculture_world.dae</uri></mesh>
           </geometry>
         </visual>
         <collision name='collision'>
           <origin xyz="0 0 0" rpy="0 0 0"/>
           <geometry>
-            <mesh><uri>file:///home/austin/Documents/2ws/src/sim_bot_description/meshes/worlds/agriculture_world.dae</uri></mesh>
+            <mesh><uri>file:///home/austingreisman/Documents/ws/src/rover_rick_sim/world/agriculture_data/agriculture_world.dae</uri></mesh>
           </geometry>
           <surface>
             <friction>

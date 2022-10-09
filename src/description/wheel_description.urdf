@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<!-- prefix used for naming, x,y_reflect used for offset directions -->
+  <xacro:macro name="wheel" params="prefix x_reflect y_reflect">
+    <link name="${prefix}_link">
+      <visual>
+        <!-- only for the initial visual appearance -->
+        <!-- wheel as a cylinder start flat NOT looking like wheel, after roll 90deg it LOOK like a wheel now -->
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find sim_bot_description)/meshes/wheel/Wheelsv2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="Gray">
+          <color rgba="0.5 0.5 0.5 1.0"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find sim_bot_description)/meshes/wheel/Wheelsv2.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+
+      <xacro:cylinder_inertia m="2.5" r="${wheel_radius}" h="${wheel_width}"/>
+    </link>
+
+    <!-- continuous joint allows free rotation along axis defined later -->
+    <joint name="${prefix}_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${prefix}_link"/>
+      <origin xyz="${x_reflect*wheel_xoff} ${y_reflect*(base_width/2 + wheel_ygap)} ${-wheel_zoff}" rpy="0 0 0"/>
+      <!-- free rotation along y axis -->
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" />
+  <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" />
+  <xacro:wheel prefix="steerwhl_l" x_reflect="1" y_reflect="1" />
+  <xacro:wheel prefix="steerwhl_r" x_reflect="1" y_reflect="-1" />
+  
+  <!-- Diff Drive -->
+  <gazebo>
+      <plugin name='skid_steer_drive' filename='libgazebo_ros_diff_drive.so'>
+        <ros>
+          <!-- Set namespace -->
+          <namespace>/demo</namespace>
+
+          <!-- Remap default topics -->
+          <!-- <remapping>cmd_vel:=cmd_demo</remapping>
+          <remapping>odom:=odom_demo</remapping> -->
+        </ros>
+
+        <!-- Update rate -->
+        <update_rate>500</update_rate>
+
+        <!-- Number of wheel pairs -->
+        <num_wheel_pairs>2</num_wheel_pairs>
+
+        <!-- wheels0 -->
+        <left_joint>steerwhl_l_joint</left_joint>
+        <right_joint>steerwhl_r_joint</right_joint>
+
+        <!-- wheels1-->
+        <left_joint>drivewhl_l_joint</left_joint>
+        <right_joint>drivewhl_r_joint</right_joint>
+
+        <!-- kinematics -->
+        <wheel_separation>0.57</wheel_separation>
+        <wheel_separation>0.57</wheel_separation>
+
+        <wheel_diameter>0.33</wheel_diameter>
+        <wheel_diameter>0.33</wheel_diameter>
+
+
+        <!-- limits -->
+        <max_wheel_torque>20</max_wheel_torque>
+        <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+        <!-- output -->
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>true</publish_wheel_tf>
+
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_link</robot_base_frame>
+
+      </plugin>
+  </gazebo>
+
+</robot>
